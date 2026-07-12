@@ -33,7 +33,7 @@ func main () {
 	var wg sync.WaitGroup
 	fmt.Println("Execution Started..")
 
-	for w := 1; w<= numOfWorkers; w++ {
+	for w := 1; w <= numOfWorkers; w++ {
 		wg.Add(1)
 		go worker(w, jobs, respChan, &wg) 
 	}
