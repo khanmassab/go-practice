@@ -12,6 +12,8 @@ type CrawlResult struct {
 }
 
 func main () {
+	var wg sync.WaitGroup
+
 	goCrawlUrls := []string {
 		"https://crawler-test.com",
 		"https://httpbin.org",
@@ -28,20 +30,14 @@ func main () {
 	numOfWorkers := 3
 
 	respChan := make(chan CrawlResult)
-	jobs := make(chan string, len(goCrawlUrls))
-	
-	var wg sync.WaitGroup
+	jobs := make(chan len(goCrawlUrls))
+
 	fmt.Println("Execution Started..")
 
-	for w := 1; w<= numOfWorkers; w++ {
+	for w := 1, jobs <= numOfWorkers, w++{
 		wg.Add(1)
-		go worker(w, jobs, respChan, &wg) 
+		go hitUrl(url, respChan, &wg)
 	}
-
-	for _, url := range goCrawlUrls {
-		jobs <- url
-	}
-	close(jobs)
 
 	go func() {
 		wg.Wait()
