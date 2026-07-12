@@ -67,12 +67,11 @@ func worker(id int, jobs <-chan string, respChan chan<- CrawlResult, wg *sync.Wa
 		resp, err := http.Get(url)
 
 		if err != nil {
-				respChan <- CrawlResult {
-					URL: url,
-					Err: err,
-				} 
-
-				return
+			respChan <- CrawlResult {
+				URL: url,
+				Err: err,
+			}
+			 continue	
 		}
 		
 		defer resp.Body.Close()

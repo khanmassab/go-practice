@@ -38,6 +38,8 @@ func worker(id int, jobs <-chan Job, result chan<- WordCountResult, wg *sync.Wai
 				WordID:  doc.JobID,
 				Err: err,
 			}
+
+			continue
 		}
 
 		result <- WordCountResult {
@@ -85,7 +87,7 @@ func main() {
 
 	for r := range result {
 		if r.Err != nil {
-			return 
+			fmt.Printf("Document ID: %d;\t Error: %d \n", r.WordID, r.Err)
 		}
 		fmt.Printf("Document ID: %d;\t Word Count: %d \n", r.WordID, r.WordCount)
 	}
